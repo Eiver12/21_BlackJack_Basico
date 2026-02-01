@@ -71,6 +71,7 @@ def juego():
 
     while True:
         submenu()
+        global contador
 
         try:
             seleccion = int(input("\nSeleccione una opción: "))
@@ -82,7 +83,7 @@ def juego():
             print("\nRepartiendo cartas...")
             time.sleep(2)
             carta_1j, carta_2j, puntos_card1j, puntos_card2j, puntos_totalesj = repartir_cartas('primero')
-            print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}")
+            print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}\nPartidas Ganadas: {contador}")
 
             print("\nRepartiendo cartas...")
             time.sleep(2)
@@ -90,7 +91,12 @@ def juego():
             print(f"\nCartas Dealer: {carta_1d}, Carta oculta\nPuntos parciales: {puntos_card1d}")
             
             if puntos_totalesj == 21:
+                contador += 1
                 print("\n21 BlackJack")
+                print("GANAS")
+            elif puntos_totalesj > 21:
+                print("\nPIERDES")
+                print("GAME OVER")
                 
             else:
                 submenu_1()
@@ -105,11 +111,12 @@ def juego():
                     time.sleep(2)
                     nueva_carta, puntaje_nueva_carta = repartir_cartas("segundo")
                     nuevo_puntaje = puntaje_nueva_carta + puntos_totalesj
-                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}, {nueva_carta}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}, {puntaje_nueva_carta}\nPuntos totales: {nuevo_puntaje}")
+                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}, {nueva_carta}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}, {puntaje_nueva_carta}\nPuntos totales: {nuevo_puntaje}\nPartidas Ganadas: {contador}")
                     
                     if nuevo_puntaje > 21:
                         print("\nGAME OVER")
                     elif nuevo_puntaje == 21:
+                        contador += 1
                         print("\n21 BlackJack")
                         
                     else:
@@ -118,11 +125,16 @@ def juego():
                         print(f"\nCartas Dealer: {carta_1d}, {carta_2d}\nPuntos parciales: {puntos_card1d}, {puntos_card2d}\nPuntos totales: {puntos_totalesd}")
                         
                         if nuevo_puntaje < puntos_totalesd:
-                            print('\nGAME OVER')
+                            print("\nPIERDES")
+                            print('GAME OVER')
+                            
+                        elif puntos_totalesd == 21:
+                            print("\n21 BlackJack Dealer")
+                            print("PIERDES")
                         else:
-                            print("\n¡21 BlackJack!")
+                            print("\nGANAS")
                 elif seleccion_2 == 2:
-                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}")
+                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}\nPuntos totales: {puntos_totalesj}\nPartidas Ganadas: {contador}")
                     
                     print("\nRevelando carta dealer....")
                     time.sleep(2)
@@ -130,6 +142,7 @@ def juego():
                     
                     
                     if puntos_totalesj > puntos_totalesd:
+                        contador += 1
                         print("\nGANASTE")
                     else:
                         print("\nPIERDES")
@@ -147,9 +160,10 @@ def juego():
         else:
             print("\nSelección no valida")
 
+contador = 0
 
 def main():
-
+    
     while True:
         menu()
 
