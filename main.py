@@ -19,11 +19,6 @@ def menu(accion):
         print("1. Otra Carta")
         print("2. Quedarse")
         print("3. Salir")
-def submenu():
-    pass
-    
-def submenu_1():
-    pass
     
     
 
