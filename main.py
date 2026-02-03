@@ -45,19 +45,52 @@ def repartir_cartas(accion):
     "6picas": 6, "7picas": 7, "8picas": 8, "9picas": 9, "10picas": 10,
     "Jpicas": 10, "Qpicas": 10, "Kpicas": 10
 }
+    lista_azes = ['Acorzacones', 'Adiamantes', 'Atreboles', 'Apicas']
     
     if accion == 'primero':
 
         carta_1 = random.choice(list(baraja.keys()))
         carta_2 = random.choice(list(baraja.keys()))
         
-        puntos_card1 = baraja[carta_1]
-        puntos_card2 = baraja[carta_2]
+        if carta_1 in lista_azes:
         
-        puntos_totales = puntos_card1 + puntos_card2
+            puntos_carta1 = baraja[carta_1]
+            puntos_carta2 = baraja[carta_2]
+        
+            puntos_parciales_a = puntos_carta1 + puntos_carta2
+            puntos_parciales_b = puntos_carta2 + 1
 
-        return carta_1, carta_2, puntos_card1, puntos_card2, puntos_totales #!tupla para desempaquetar
-    
+            return carta_1, carta_2, puntos_carta1, puntos_carta2, puntos_parciales_a, puntos_parciales_b #!tupla para desempaquetar
+        
+        elif carta_2 in lista_azes:
+            
+            puntos_carta1 = baraja[carta_1]
+            puntos_carta2 = baraja[carta_2]
+            
+            puntos_parciales_a = puntos_carta1 + puntos_carta2
+            puntos_parciales_b = puntos_carta1 + 1
+            
+            return carta_1, carta_2, puntos_carta1, puntos_carta2, puntos_parciales_a, puntos_parciales_b
+        
+        elif carta_2 in lista_azes and carta_1 in lista_azes:
+            
+            puntos_carta1 = baraja[carta_1]
+            puntos_carta2 = baraja[carta_2]
+            
+            puntos_parciales_a = puntos_carta1 + puntos_carta2
+            puntos_parciales_b = 1 + 1
+            
+            return carta_1, carta_2, puntos_carta1, puntos_carta2, puntos_parciales_a, puntos_parciales_b
+            
+        else:
+            puntos_carta1 = baraja[carta_1]
+            puntos_carta2 = baraja[carta_2]
+            
+            puntos_parciales_a = puntos_carta1 + puntos_carta2
+            puntos_parciales_b = 0
+            
+            return carta_1, carta_2, puntos_carta1, puntos_carta2, puntos_parciales_a, puntos_parciales_b
+        
     elif accion == 'segundo':
         
         segunda_carta = random.choice(list(baraja.keys()))
@@ -82,70 +115,170 @@ def juego():
 
             print("\nRepartiendo cartas...")
             time.sleep(2)
-            carta_1j, carta_2j, puntos_card1j, puntos_card2j, puntos_totalesj = repartir_cartas('primero')
-            print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}\nPartidas Ganadas: {contador}")
+            carta_1j, carta_2j, puntos_carta_1j, puntos_carta2j, puntos_parcialesaj, puntos_parcialesbj = repartir_cartas('primero')
+            print(f"""
+                --------------------------------------------------
+                Tus Cartas: {carta_1j}, {carta_2j}
+                * Puntos Cartas: {puntos_carta_1j}, {puntos_carta2j}
+                * Puntos Parciales a: {puntos_parcialesaj}
+                * Puntos Parciales b: {puntos_parcialesbj}
+                ----------------------------------------------------
+                Partidas Ganadas: {contador}""")
 
             print("\nRepartiendo cartas...")
             time.sleep(2)
-            carta_1d, carta_2d, puntos_card1d, puntos_card2d, puntos_totalesd = repartir_cartas('primero')
-            print(f"\nCartas Dealer: {carta_1d}, Carta oculta\nPuntos parciales: {puntos_card1d}")
+            carta_1d, carta_2d, puntos_carta1d, puntos_carta2d, puntos_parcialesad, puntos_parcialesbd = repartir_cartas('primero')
+            print(f"""
+                -----------------------------------------
+                * Cartas Dealer: {carta_1d}, Carta oculta
+                * Puntoa Cartas: {puntos_carta1d}, oculto
+                * Puntos parciales a: {puntos_carta1d}
+                -------------------------------------------""")
             
-            if puntos_totalesj == 21:
+            if puntos_parcialesaj == 21 or puntos_parcialesbj == 21:
                 contador += 1
                 print("\n21 BlackJack")
                 print("GANAS")
-            elif puntos_totalesj > 21:
+                
+            elif puntos_parcialesaj > 21 or puntos_parcialesbj > 21:
+                print("\nmayor a 21")
                 print("\nPIERDES")
                 print("GAME OVER")
                 
+                
             else:
-                submenu_1()
+                submenu_1() #! seguir jugando
                 try:
                     seleccion_2 = int(input("\nSeleccione una opcion:  "))
                     
                 except ValueError:
-                    print("\nseleccion incorrecta")
+                    print("\nSeleccion incorrecta")
                     
-                if seleccion_2 == 1:
+                if seleccion_2 == 1: #! Repartir otra carta
+                    print("\nOTRA CARTA")
                     print("\nRepartiendo cartas...")
                     time.sleep(2)
                     nueva_carta, puntaje_nueva_carta = repartir_cartas("segundo")
-                    nuevo_puntaje = puntaje_nueva_carta + puntos_totalesj
-                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}, {nueva_carta}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}, {puntaje_nueva_carta}\nPuntos totales: {nuevo_puntaje}\nPartidas Ganadas: {contador}")
+                    nuevo_puntajea = puntaje_nueva_carta + puntos_parcialesaj
+                    if puntos_parcialesbj:
+                        nuevo_puntajeb = puntaje_nueva_carta + puntos_parcialesbj
+                    else:
+                        nuevo_puntajeb = 0
+                    print(f"""
+                        -----------------------------------------------------
+                        Tus Cartas: {carta_1j}, {carta_2j}, {nueva_carta}
+                        Puntos Cartas: {puntos_carta_1j}, {puntos_carta2j}, {puntaje_nueva_carta}
+                        Puntaje total a: {nuevo_puntajea}
+                        Puntaje total b: {nuevo_puntajeb}
+                        --------------------------------------------------------
+                        Partidas Ganadas: {contador}""")
                     
-                    if nuevo_puntaje > 21:
+                    if nuevo_puntajea > 21 or nuevo_puntajeb > 21:
+                        print("\nPIERDES")
                         print("\nGAME OVER")
-                    elif nuevo_puntaje == 21:
+                    elif nuevo_puntajea == 21 or nuevo_puntajeb == 21:
                         contador += 1
                         print("\n21 BlackJack")
+                        print("\n GANAS")
                         
                     else:
                         print("\nRevelando carta dealer....")
                         time.sleep(2)
-                        print(f"\nCartas Dealer: {carta_1d}, {carta_2d}\nPuntos parciales: {puntos_card1d}, {puntos_card2d}\nPuntos totales: {puntos_totalesd}")
+                        print(f"""
+                            -----------------------------------------------
+                            Cartas Dealer: {carta_1d}, {carta_2d}
+                            Puntos parciales: {puntos_carta1d}, {puntos_carta2d}
+                            Puntos totales a: {puntos_parcialesad}
+                            Puntos totales b: {puntos_parcialesbd}
+                            ---------------------------------------------------""")
                         
-                        if nuevo_puntaje < puntos_totalesd:
-                            print("\nPIERDES")
-                            print('GAME OVER')
-                            
-                        elif puntos_totalesd == 21:
+                        if nuevo_puntajeb == 0 and puntos_parcialesbd == 0:
+                            if nuevo_puntajea > puntos_parcialesad:
+                                print("\nGANAS")
+                                print('GAME OVER')
+                            else:
+                                print("\nPIERDES")
+                                print('GAME OVER')
+                        elif nuevo_puntajeb != 0 and puntos_parcialesbd == 0:
+                            if nuevo_puntajea > puntos_parcialesad or nuevo_puntajeb > puntos_parcialesad:
+                                print("\nGANAS")
+                                print('GAME OVER')
+                            else:
+                                print("\nPIERDES")
+                                print('GAME OVER')
+                                
+                        elif nuevo_puntajeb == 0 and puntos_parcialesbd != 0:
+                            if nuevo_puntajea > puntos_parcialesad or nuevo_puntajea > puntos_parcialesbd:
+                                print("\nGANAS")
+                                print('GAME OVER')
+                            else:
+                                print("\nPIERDES")
+                                print('GAME OVER')
+                                
+                        elif puntos_parcialesad == 21 or puntos_parcialesbd == 21:
                             print("\n21 BlackJack Dealer")
                             print("PIERDES")
                         else:
-                            print("\nGANAS")
+                            print("\npierdes")
+                            
                 elif seleccion_2 == 2:
-                    print(f"\nTus Cartas: {carta_1j}, {carta_2j}\nPuntos parciales: {puntos_card1j}, {puntos_card2j}\nPuntos totales: {puntos_totalesj}\nPuntos totales: {puntos_totalesj}\nPartidas Ganadas: {contador}")
+                    print("QUEDARSE")
+                    print(f"""
+                        ---------------------------------------------------
+                        * Tus Cartas: {carta_1j}, {carta_2j}
+                        * Puntos Cartas: {puntos_carta_1j}, {puntos_carta2j}
+                        * Puntos Totales a: {puntos_parcialesaj}
+                        * Puntos Totales b: {puntos_parcialesbj}
+                        ---------------------------------------------------
+                        Partidas Ganadas: {contador}""")
                     
                     print("\nRevelando carta dealer....")
                     time.sleep(2)
-                    print(f"\nCartas Dealer: {carta_1d}, {carta_2d}\nPuntos parciales: {puntos_card1d}, {puntos_card2d}\nPuntos totales: {puntos_totalesd}")
+                    print(f"""
+                        ----------------------------------------------------
+                        * Cartas Dealer: {carta_1d}, {carta_2d}
+                        * Puntos Cartas: {puntos_carta1d}, {puntos_carta2d}
+                        * Puntos Totales a: {puntos_parcialesad}
+                        * Puntos Totales b: {puntos_parcialesbd}
+                        -----------------------------------------------------""")
                     
+                    if puntos_parcialesaj == 21 or puntos_parcialesbj == 21:
+                        print("\nBlackJack!")
+                        print("\nGANAS")
+                        print('GAME OVER')
                     
-                    if puntos_totalesj > puntos_totalesd:
-                        contador += 1
-                        print("\nGANASTE")
+                    elif puntos_parcialesbj == 0 and puntos_parcialesbd == 0:
+                        if  puntos_parcialesaj > puntos_parcialesad:
+                            print("\nGANAS")
+                            print('GAME OVER')
+                        else:
+                            print("\nPIERDES")
+                            print('GAME OVER')
+                            
+                    elif puntos_parcialesbj != 0 and puntos_parcialesbd == 0:
+                        if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesbj > puntos_parcialesad:
+                            print("\nGANAS")
+                            print('GAME OVER')
+                        else:
+                            print("\nPIERDES")
+                            print('GAME OVER')
+                            
+                    elif puntos_parcialesbj == 0 and puntos_parcialesbd != 0:
+                        if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesaj > puntos_parcialesbd:
+                            print("\nGANAS")
+                            print('GAME OVER')
+                        else:
+                            print("\nPIERDES")
+                            print('GAME OVER')
+                            
+                    elif puntos_parcialesad == 21 or puntos_parcialesbd == 21:
+                            print("\nBlackJack dealer")
+                            print("\nPIERDES")
+                            print('GAME OVER')
                     else:
-                        print("\nPIERDES")
+                            print("\nPIERDES")
+                
+                
                 elif seleccion_2 == 3:
                     print("GAME OVER")
                     print("Saliendo de la partida...")
