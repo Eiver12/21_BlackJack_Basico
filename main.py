@@ -112,7 +112,8 @@ def juego():
             print("\nSelección no valida")
 
         if seleccion == 1:
-
+            print("\n1 FASE")
+            print("----------")
             print("\nRepartiendo cartas...")
             time.sleep(2)
             carta_1j, carta_2j, puntos_carta_1j, puntos_carta2j, puntos_parcialesaj, puntos_parcialesbj = repartir_cartas('primero')
@@ -155,7 +156,9 @@ def juego():
                     print("\nSeleccion incorrecta")
                     
                 if seleccion_2 == 1: #! Repartir otra carta
-                    print("\nOTRA CARTA")
+                    print("\n2 FASE")
+                    print("----------")
+                    print("OTRA CARTA")
                     print("\nRepartiendo cartas...")
                     time.sleep(2)
                     nueva_carta, puntaje_nueva_carta = repartir_cartas("segundo")
@@ -194,6 +197,7 @@ def juego():
                         
                         if nuevo_puntajeb == 0 and puntos_parcialesbd == 0:
                             if nuevo_puntajea > puntos_parcialesad:
+                                contador += 1
                                 print("\nGANAS")
                                 print('GAME OVER')
                             else:
@@ -201,6 +205,7 @@ def juego():
                                 print('GAME OVER')
                         elif nuevo_puntajeb != 0 and puntos_parcialesbd == 0:
                             if nuevo_puntajea > puntos_parcialesad or nuevo_puntajeb > puntos_parcialesad:
+                                contador += 1
                                 print("\nGANAS")
                                 print('GAME OVER')
                             else:
@@ -209,6 +214,7 @@ def juego():
                                 
                         elif nuevo_puntajeb == 0 and puntos_parcialesbd != 0:
                             if nuevo_puntajea > puntos_parcialesad or nuevo_puntajea > puntos_parcialesbd:
+                                contador += 1
                                 print("\nGANAS")
                                 print('GAME OVER')
                             else:
@@ -222,6 +228,8 @@ def juego():
                             print("\npierdes")
                             
                 elif seleccion_2 == 2:
+                    print("\n2 FASE")
+                    print("----------")
                     print("QUEDARSE")
                     print(f"""
                         ---------------------------------------------------
@@ -243,12 +251,14 @@ def juego():
                         -----------------------------------------------------""")
                     
                     if puntos_parcialesaj == 21 or puntos_parcialesbj == 21:
+                        contador += 1
                         print("\nBlackJack!")
                         print("\nGANAS")
                         print('GAME OVER')
                     
                     elif puntos_parcialesbj == 0 and puntos_parcialesbd == 0:
                         if  puntos_parcialesaj > puntos_parcialesad:
+                            contador += 1
                             print("\nGANAS")
                             print('GAME OVER')
                         else:
@@ -257,6 +267,7 @@ def juego():
                             
                     elif puntos_parcialesbj != 0 and puntos_parcialesbd == 0:
                         if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesbj > puntos_parcialesad:
+                            contador += 1
                             print("\nGANAS")
                             print('GAME OVER')
                         else:
@@ -265,6 +276,7 @@ def juego():
                             
                     elif puntos_parcialesbj == 0 and puntos_parcialesbd != 0:
                         if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesaj > puntos_parcialesbd:
+                            contador += 1
                             print("\nGANAS")
                             print('GAME OVER')
                         else:
