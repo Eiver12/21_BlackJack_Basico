@@ -2,24 +2,29 @@ import random
 import time
 
 
-def menu():
+def menu(accion):
 
-    print("\n21 BLACKJACK")
-    print("1. Jugar")
-    print("2. Salir")
-
-
+    if accion == 'principal':
+        print("\n21 BLACKJACK")
+        print("1. Jugar")
+        print("2. Salir")
+        
+    elif accion == 'partida':
+        print("\n21 BLACKJACK")
+        print("1. Repartir cartas")
+        print("2. Salir")
+        
+    elif accion == '2fase':
+        print("\n21 BLACKJACK")
+        print("1. Otra Carta")
+        print("2. Quedarse")
+        print("3. Salir")
 def submenu():
-    print("\n21 BLACKJACK")
-    print("1. Repartir cartas")
-    print("2. Salir")
+    pass
     
 def submenu_1():
+    pass
     
-    print("\n21 BLACKJACK")
-    print("1. Otra Carta")
-    print("2. Quedarse")
-    print("3. Salir")
     
 
 
@@ -103,7 +108,7 @@ def repartir_cartas(accion):
 def juego():
 
     while True:
-        submenu()
+        menu('partida')
         global contador
 
         try:
@@ -143,12 +148,12 @@ def juego():
                 
             elif puntos_parcialesaj > 21 or puntos_parcialesbj > 21:
                 print("\nmayor a 21")
-                print("\nPIERDES")
+                print("PIERDES")
                 print("GAME OVER")
                 
                 
             else:
-                submenu_1() #! seguir jugando
+                menu('2fase') #! seguir jugando
                 try:
                     seleccion_2 = int(input("\nSeleccione una opcion:  "))
                     
@@ -178,7 +183,7 @@ def juego():
                     
                     if nuevo_puntajea > 21 or nuevo_puntajeb > 21:
                         print("\nPIERDES")
-                        print("\nGAME OVER")
+                        print("GAME OVER")
                     elif nuevo_puntajea == 21 or nuevo_puntajeb == 21:
                         contador += 1
                         print("\n21 BlackJack")
@@ -310,7 +315,7 @@ contador = 0
 def main():
     
     while True:
-        menu()
+        menu('principal')
 
         try:
             opcion = int(input("\nSeleccione un opción: "))
@@ -324,7 +329,7 @@ def main():
             time.sleep(1)
             juego()
         elif opcion == 2:
-            print("\nSaliendo del juego")
+            print("\nSaliendo del juego...")
             break
         else:
             print("\nOpcion no valida")
