@@ -3,7 +3,7 @@ import time
 
 
 def menu(accion):
-
+    global pozo
     if accion == 'principal':
         print("\n21 BLACKJACK")
         print("1. Jugar")
@@ -13,6 +13,9 @@ def menu(accion):
         print("\n21 BLACKJACK")
         print("1. Repartir cartas")
         print("2. Salir")
+        print("----------------------")
+        print(f"\nDinero disponible: {pozo}$")
+        
         
     elif accion == '2fase':
         print("\n21 BLACKJACK")
@@ -20,9 +23,6 @@ def menu(accion):
         print("2. Quedarse")
         print("3. Salir")
     
-    
-
-
 def repartir_cartas(accion):
     baraja = {
     # Corazones (corazones)
@@ -105,6 +105,7 @@ def juego():
     while True:
         menu('partida')
         global contador
+        global pozo
 
         try:
             seleccion = int(input("\nSeleccione una opción: "))
@@ -124,7 +125,8 @@ def juego():
                 * Puntos Parciales a: {puntos_parcialesaj}
                 * Puntos Parciales b: {puntos_parcialesbj}
                 ----------------------------------------------------
-                Partidas Ganadas: {contador}""")
+                Partidas Ganadas: {contador}
+                Dinero Disponible: {pozo}$""")
 
             print("\nRepartiendo cartas...")
             time.sleep(2)
@@ -138,14 +140,19 @@ def juego():
             
             if puntos_parcialesaj == 21 or puntos_parcialesbj == 21:
                 contador += 1
+                pozo += 20
                 print("\n21 BlackJack")
                 print("GANAS")
+                print("-----------")
+                print(f"Ganaste +20$")
                 
             elif puntos_parcialesaj > 21 or puntos_parcialesbj > 21:
+                pozo -= 20
                 print("\nmayor a 21")
                 print("PIERDES")
                 print("GAME OVER")
-                
+                print("-----------")
+                print(f"Pierdes -20$")
                 
             else:
                 menu('2fase') #! seguir jugando
@@ -174,15 +181,23 @@ def juego():
                         Puntaje total a: {nuevo_puntajea}
                         Puntaje total b: {nuevo_puntajeb}
                         --------------------------------------------------------
-                        Partidas Ganadas: {contador}""")
+                        Partidas Ganadas: {contador}
+                        Dinero Disponible: {pozo}""")
                     
                     if nuevo_puntajea > 21 or nuevo_puntajeb > 21:
+                        pozo -= 20
                         print("\nPIERDES")
                         print("GAME OVER")
+                        print("-----------")
+                        print(f"Pierdes -20$")
+                        
                     elif nuevo_puntajea == 21 or nuevo_puntajeb == 21:
                         contador += 1
+                        pozo += 20
                         print("\n21 BlackJack")
                         print("\n GANAS")
+                        print("-----------")
+                        print(f"Ganaste +20$")
                         
                     else:
                         print("\nRevelando carta dealer....")
@@ -198,34 +213,63 @@ def juego():
                         if nuevo_puntajeb == 0 and puntos_parcialesbd == 0:
                             if nuevo_puntajea > puntos_parcialesad:
                                 contador += 1
+                                pozo += 20
                                 print("\nGANAS")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Ganaste +20$")
+                                
                             else:
+                                pozo -= 20
                                 print("\nPIERDES")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Pierdes -20$")
+                                
                         elif nuevo_puntajeb != 0 and puntos_parcialesbd == 0:
                             if nuevo_puntajea > puntos_parcialesad or nuevo_puntajeb > puntos_parcialesad:
                                 contador += 1
+                                pozo += 20
                                 print("\nGANAS")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Ganaste +20$")
+                                
                             else:
+                                pozo -= 20
                                 print("\nPIERDES")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Pierdes -20$")
                                 
                         elif nuevo_puntajeb == 0 and puntos_parcialesbd != 0:
                             if nuevo_puntajea > puntos_parcialesad or nuevo_puntajea > puntos_parcialesbd:
                                 contador += 1
+                                pozo += 20
                                 print("\nGANAS")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Ganaste +20$")
+                                
                             else:
+                                pozo -= 20
                                 print("\nPIERDES")
                                 print('GAME OVER')
+                                print("-----------")
+                                print(f"Pierdes -20$")
                                 
                         elif puntos_parcialesad == 21 or puntos_parcialesbd == 21:
+                            pozo -= 20
                             print("\n21 BlackJack Dealer")
                             print("PIERDES")
+                            print("-----------")
+                            print(f"Pierdes -20$")
+                            
                         else:
+                            pozo -= 20
                             print("\npierdes")
+                            print("-----------")
+                            print(f"Pierdes -20$")
                             
                 elif seleccion_2 == 2:
                     print("\n2 FASE")
@@ -238,7 +282,8 @@ def juego():
                         * Puntos Totales a: {puntos_parcialesaj}
                         * Puntos Totales b: {puntos_parcialesbj}
                         ---------------------------------------------------
-                        Partidas Ganadas: {contador}""")
+                        Partidas Ganadas: {contador}
+                        Dinero Disponible: {pozo}""")
                     
                     print("\nRevelando carta dealer....")
                     time.sleep(2)
@@ -252,43 +297,73 @@ def juego():
                     
                     if puntos_parcialesaj == 21 or puntos_parcialesbj == 21:
                         contador += 1
+                        pozo += 20
                         print("\nBlackJack!")
                         print("\nGANAS")
                         print('GAME OVER')
+                        print("-----------")
+                        print(f"Ganaste +20$")
                     
                     elif puntos_parcialesbj == 0 and puntos_parcialesbd == 0:
                         if  puntos_parcialesaj > puntos_parcialesad:
                             contador += 1
+                            pozo += 20
                             print("\nGANAS")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Ganaste +20$")
+                            
                         else:
+                            pozo -= 20
                             print("\nPIERDES")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Pierdes -20$")
                             
                     elif puntos_parcialesbj != 0 and puntos_parcialesbd == 0:
                         if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesbj > puntos_parcialesad:
                             contador += 1
+                            pozo += 20
                             print("\nGANAS")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Ganaste +20$")
                         else:
+                            pozo -= 20
                             print("\nPIERDES")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Pierdes -20$")
                             
                     elif puntos_parcialesbj == 0 and puntos_parcialesbd != 0:
                         if puntos_parcialesaj > puntos_parcialesad or puntos_parcialesaj > puntos_parcialesbd:
                             contador += 1
+                            pozo += 20
                             print("\nGANAS")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Ganaste +20$")
+                            
                         else:
+                            pozo -= 20
                             print("\nPIERDES")
                             print('GAME OVER')
+                            print("-----------")
+                            print(f"Pierdes -20$")
                             
                     elif puntos_parcialesad == 21 or puntos_parcialesbd == 21:
-                            print("\nBlackJack dealer")
-                            print("\nPIERDES")
-                            print('GAME OVER')
+                        pozo -= 20
+                        print("\nBlackJack dealer")
+                        print("\nPIERDES")
+                        print('GAME OVER')
+                        print("-----------")
+                        print(f"Pierdes -20$")
+                        
                     else:
-                            print("\nPIERDES")
+                        print("\nPIERDES")
+                        pozo -= 20
+                        print("-----------")
+                        print(f"Pierdes -20$")
                 
                 
                 elif seleccion_2 == 3:
@@ -302,10 +377,15 @@ def juego():
         elif seleccion == 2:
             print("\nGAME OVER")
             break
+        elif pozo == 0:
+            print("No tienes dinero")
+            print("GAME OVER")
+            break
         else:
             print("\nSelección no valida")
 
 contador = 0
+pozo = 100
 
 def main():
     
