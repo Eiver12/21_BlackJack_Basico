@@ -111,8 +111,13 @@ def juego():
             seleccion = int(input("\nSeleccione una opción: "))
         except ValueError:
             print("\nSelección no valida")
+            
+        if pozo == 0:
+            print("No tienes dinero")
+            print("GAME OVER")
+            break
 
-        if seleccion == 1:
+        elif seleccion == 1:
             print("\n1 FASE")
             print("----------")
             print("\nRepartiendo cartas...")
@@ -377,10 +382,7 @@ def juego():
         elif seleccion == 2:
             print("\nGAME OVER")
             break
-        elif pozo == 0:
-            print("No tienes dinero")
-            print("GAME OVER")
-            break
+        
         else:
             print("\nSelección no valida")
 
